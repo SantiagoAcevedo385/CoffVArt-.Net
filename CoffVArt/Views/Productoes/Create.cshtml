@@ -9,31 +9,31 @@
 
 <h4>Producto</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="loginRow">
+    <div class="formContainer">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            <div class="formInputContainer">
                 <label asp-for="Codigo" class="control-label"></label>
-                <input asp-for="Codigo" class="form-control" />
+                <input asp-for="Codigo" class="form-control" placeholder="input"/>
                 <span asp-validation-for="Codigo" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="formInputContainer">
                 <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
+                <input asp-for="Nombre" class="form-control" placeholder="input"/>
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="formInputContainer">
                 <label asp-for="Precio" class="control-label"></label>
-                <input asp-for="Precio" class="form-control" />
+                <input asp-for="Precio" class="form-control" placeholder="input"/>
                 <span asp-validation-for="Precio" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="formInputContainer">
                 <label asp-for="Cantidad" class="control-label"></label>
-                <input asp-for="Cantidad" class="form-control" />
+                <input asp-for="Cantidad" class="form-control" placeholder="input"/>
                 <span asp-validation-for="Cantidad" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="formInputContainer">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
