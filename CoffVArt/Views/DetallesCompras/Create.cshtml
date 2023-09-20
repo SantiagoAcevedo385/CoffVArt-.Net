@@ -14,21 +14,21 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="formInputContainer">
-                <label asp-for="CompraId" class="control-label"></label>
                 <select asp-for="CompraId" class ="form-control" asp-items="ViewBag.CompraId"></select>
+                <label asp-for="CompraId" class="control-label"></label>
             </div>
             <div class="formInputContainer">
-                <label asp-for="InsumoId" class="control-label"></label>
                 <select asp-for="InsumoId" class ="form-control" asp-items="ViewBag.InsumoId"></select>
+                <label asp-for="InsumoId" class="control-label"></label>
             </div>
             <div class="formInputContainer">
-                <label asp-for="Cantidad" class="control-label"></label>
                 <input asp-for="Cantidad" class="form-control" placeholder="input"/>
+                <label asp-for="Cantidad" class="control-label"></label>
                 <span asp-validation-for="Cantidad" class="text-danger"></span>
             </div>
             <div class="formInputContainer">
-                <label asp-for="Valor" class="control-label"></label>
                 <input asp-for="Valor" class="form-control" placeholder="input"/>
+                <label asp-for="Valor" class="control-label"></label>
                 <span asp-validation-for="Valor" class="text-danger"></span>
             </div>
             <div class="formInputContainer">

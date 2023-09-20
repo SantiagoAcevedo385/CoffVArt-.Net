@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CoffVArt.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using CoffVArt.Models;
-using Microsoft.AspNetCore.Authorization;
+
 
 namespace CoffVArt.Controllers
 {
@@ -21,10 +22,14 @@ namespace CoffVArt.Controllers
 
         [Authorize]
         // GET: Ventas
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int option, string filter)
         {
-            var coffvart2Context = _context.Ventas.Include(v => v.Cliente);
-            return View(await coffvart2Context.ToListAsync());
+            var TallerCrudContext = _context.Ventas.Include(v => v.Cliente);
+            if (!String.IsNullOrEmpty(filter))
+                return View(await _context.Ventas.Include(v => v.Cliente)
+                    .Where(x => option == 1 ? x.Cliente.Cedula == Convert.ToInt32(filter) : x.IdVenta == Convert.ToInt32(filter)).ToListAsync());
+
+            return View(await TallerCrudContext.ToListAsync());
         }
 
         // GET: Ventas/Details/5
@@ -42,14 +47,18 @@ namespace CoffVArt.Controllers
             {
                 return NotFound();
             }
-
+            venta.DetallesVenta = await _context.DetallesVentas
+                .Where(x => x.VentaId == venta.IdVenta)
+                .Include(v => v.Producto)
+                .ToListAsync();
             return View(venta);
         }
 
         // GET: Ventas/Create
         public IActionResult Create()
         {
-            ViewData["ClienteId"] = new SelectList(_context.Clientes, "IdClientes", "IdClientes");
+            var cosa = new SelectList(_context.Clientes, "IdClientes", "Cedula", "Nombre");
+            ViewData["ClienteId"] = cosa;
             return View();
         }
 
@@ -66,7 +75,7 @@ namespace CoffVArt.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClienteId"] = new SelectList(_context.Clientes, "IdClientes", "IdClientes", venta.ClienteId);
+            ViewData["ClienteId"] = new SelectList(_context.Clientes, "IdClientes", "Nombre", venta.ClienteId);
             return View(venta);
         }
 
@@ -149,21 +158,21 @@ namespace CoffVArt.Controllers
         {
             if (_context.Ventas == null)
             {
-                return Problem("Entity set 'Coffvart2Context.Ventas'  is null.");
+                return Problem("Entity set 'TallerCrudContext.Ventas' is null.");
             }
             var venta = await _context.Ventas.FindAsync(id);
             if (venta != null)
             {
                 _context.Ventas.Remove(venta);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool VentaExists(int id)
         {
-          return (_context.Ventas?.Any(e => e.IdVenta == id)).GetValueOrDefault();
+            return (_context.Ventas?.Any(e => e.IdVenta == id)).GetValueOrDefault();
         }
     }
 }

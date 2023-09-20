@@ -15,23 +15,23 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="DetalleVentaId" />
             <div class="formInputContainer">
-                <label asp-for="VentaId" class="control-label"></label>
                 <select asp-for="VentaId" class="form-control" asp-items="ViewBag.VentaId"></select>
+                <label asp-for="VentaId" class="control-label"></label>
                 <span asp-validation-for="VentaId" class="text-danger"></span>
             </div>
             <div class="formInputContainer">
-                <label asp-for="ProductoId" class="control-label"></label>
                 <select asp-for="ProductoId" class="form-control" asp-items="ViewBag.ProductoId"></select>
+                <label asp-for="ProductoId" class="control-label"></label>
                 <span asp-validation-for="ProductoId" class="text-danger"></span>
             </div>
             <div class="formInputContainer">
-                <label asp-for="Cantidad" class="control-label"></label>
                 <input asp-for="Cantidad" class="form-control" placeholder="input"/>
+                <label asp-for="Cantidad" class="control-label"></label>
                 <span asp-validation-for="Cantidad" class="text-danger"></span>
             </div>
             <div class="formInputContainer">
-                <label asp-for="Valor" class="control-label"></label>
                 <input asp-for="Valor" class="form-control" placeholder="input"/>
+                <label asp-for="Valor" class="control-label"></label>
                 <span asp-validation-for="Valor" class="text-danger"></span>
             </div>
             <div class="formInputContainer">

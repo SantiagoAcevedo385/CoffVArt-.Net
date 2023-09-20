@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CoffVArt.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using CoffVArt.Models;
-using Microsoft.AspNetCore.Authorization;
+
 
 namespace CoffVArt.Controllers
 {
@@ -22,12 +23,30 @@ namespace CoffVArt.Controllers
         [Authorize]
 
         // GET: Clientes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
-              return _context.Clientes != null ? 
-                          View(await _context.Clientes.ToListAsync()) :
-                          Problem("Entity set 'Coffvart2Context.Clientes'  is null.");
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["CurrentFilter"] = searchString;
+
+            var clientes = from s in _context.Clientes
+                           select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                clientes = clientes.Where(s => s.Nombre.Contains(searchString)
+                    || s.Nombre.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    clientes = clientes.OrderByDescending(s => s.Nombre);
+                    break;
+                default:
+                    clientes = clientes.OrderBy(s => s.Nombre);
+                    break;
+            }
+            return View(await clientes.AsNoTracking().ToListAsync());
         }
+
 
         // GET: Clientes/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -145,21 +164,21 @@ namespace CoffVArt.Controllers
         {
             if (_context.Clientes == null)
             {
-                return Problem("Entity set 'Coffvart2Context.Clientes'  is null.");
+                return Problem("Entity set 'TallerCrudContext.Clientes'  is null.");
             }
             var cliente = await _context.Clientes.FindAsync(id);
             if (cliente != null)
             {
                 _context.Clientes.Remove(cliente);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ClienteExists(int id)
         {
-          return (_context.Clientes?.Any(e => e.IdClientes == id)).GetValueOrDefault();
+            return (_context.Clientes?.Any(e => e.IdClientes == id)).GetValueOrDefault();
         }
     }
 }

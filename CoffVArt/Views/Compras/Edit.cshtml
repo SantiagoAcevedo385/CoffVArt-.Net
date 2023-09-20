@@ -15,18 +15,18 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="IdCompra" />
             <div class="formInputContainer">
-                <label asp-for="FechaCompra" class="control-label"></label>
                 <input asp-for="FechaCompra" class="form-control" placeholder="input"/>
+                <label asp-for="FechaCompra" class="control-label"></label>
                 <span asp-validation-for="FechaCompra" class="text-danger"></span>
             </div>
             <div class="formInputContainer">
-                <label asp-for="ProveedorId" class="control-label"></label>
                 <select asp-for="ProveedorId" class="form-control" asp-items="ViewBag.ProveedorId"></select>
+                <label asp-for="ProveedorId" class="control-label"></label>
                 <span asp-validation-for="ProveedorId" class="text-danger"></span>
             </div>
             <div class="formInputContainer">
-                <label asp-for="Total" class="control-label"></label>
                 <input asp-for="Total" class="form-control" placeholder="input"/>
+                <label asp-for="Total" class="control-label"></label>
                 <span asp-validation-for="Total" class="text-danger"></span>
             </div>
             <div class="formInputContainer">
